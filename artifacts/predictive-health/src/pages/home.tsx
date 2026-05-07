@@ -93,6 +93,8 @@ const REPORT_ITEMS = [
 
 export default function Home() {
   const [activeStep, setActiveStep] = useState(0);
+  const [showHpCode, setShowHpCode] = useState(false);
+  const [showLenovoCode, setShowLenovoCode] = useState(false);
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-hidden selection:bg-primary/30">
@@ -622,7 +624,7 @@ export default function Home() {
 
           <div className="grid lg:grid-cols-2 gap-10 items-start">
 
-            {/* Code preview */}
+            {/* Collapsible code preview */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -630,110 +632,86 @@ export default function Home() {
               transition={{ duration: 0.8 }}
               className="glass-panel rounded-2xl overflow-hidden"
             >
-              {/* Terminal chrome */}
-              <div className="flex items-center gap-2 px-5 py-3.5 border-b border-white/10 bg-black/30">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-red-500/70" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-500/70" />
-                  <div className="w-3 h-3 rounded-full bg-emerald-500/70" />
+              {/* Terminal chrome — always visible */}
+              <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/10 bg-black/30">
+                <div className="flex items-center gap-3">
+                  <div className="flex gap-1.5">
+                    <div className="w-3 h-3 rounded-full bg-red-500/70" />
+                    <div className="w-3 h-3 rounded-full bg-yellow-500/70" />
+                    <div className="w-3 h-3 rounded-full bg-emerald-500/70" />
+                  </div>
+                  <span className="text-xs text-muted-foreground font-mono">hp_laptop_diagnostics.py</span>
                 </div>
-                <span className="text-xs text-muted-foreground font-mono ml-2">hp_laptop_diagnostics.py</span>
+                <button
+                  onClick={() => setShowHpCode(v => !v)}
+                  data-testid="button-toggle-hp-code"
+                  className="flex items-center gap-1.5 text-xs text-primary hover:text-primary/80 transition-colors font-medium cursor-pointer"
+                >
+                  <Terminal className="w-3.5 h-3.5" />
+                  {showHpCode ? "Hide code" : "View code"}
+                  <ChevronRight className={`w-3 h-3 transition-transform duration-200 ${showHpCode ? "rotate-90" : ""}`} />
+                </button>
               </div>
 
-              {/* Code body */}
-              <div className="p-6 font-mono text-xs leading-6 overflow-x-auto">
-                <div className="text-muted-foreground/50">
-                  {"# ══════════════════════════════════════════════════════"}
+              {/* Collapsed summary — always visible */}
+              <div className="p-6">
+                <div className="grid grid-cols-2 gap-3 mb-4">
+                  {[
+                    { label: "Language", value: "Python 3.9+" },
+                    { label: "Platform", value: "Windows 10/11" },
+                    { label: "Lines", value: "2,732" },
+                    { label: "Requires", value: "Admin recommended" },
+                  ].map(({ label, value }) => (
+                    <div key={label} className="bg-white/[0.03] rounded-lg px-4 py-3 border border-white/5">
+                      <div className="text-xs text-muted-foreground mb-0.5">{label}</div>
+                      <div className="text-sm font-semibold font-mono text-foreground">{value}</div>
+                    </div>
+                  ))}
                 </div>
-                <div className="text-primary/80 font-semibold">
-                  {"# HP LAPTOP COMPREHENSIVE DIAGNOSTIC & PREDICTIVE HEALTH"}
-                </div>
-                <div className="text-muted-foreground/50">
-                  {"# ══════════════════════════════════════════════════════"}
-                </div>
-                <div className="mt-3 text-muted-foreground/60">
-                  {"# Covers: Battery · SSD/NVMe · CPU · RAM · GPU"}
-                </div>
-                <div className="text-muted-foreground/60">
-                  {"#         Thermals · Fans · Power · Drivers · Network"}
-                </div>
-                <div className="mt-3 text-muted-foreground/60">
-                  {"# Supports: Spectre · Envy · Pavilion · EliteBook"}
-                </div>
-                <div className="text-muted-foreground/60">
-                  {"#           ProBook · Omen · Victus · ZBook · Dragonfly"}
-                </div>
-                <div className="mt-4 text-muted-foreground/40">{"# ─── Usage ───────────────────────────────────────────"}</div>
-                <div className="mt-1">
-                  <span className="text-emerald-400">python</span>
-                  <span className="text-foreground"> hp_laptop_diagnostics.py</span>
-                  <span className="text-muted-foreground/50">{"          # full scan"}</span>
-                </div>
-                <div>
-                  <span className="text-emerald-400">python</span>
-                  <span className="text-foreground"> hp_laptop_diagnostics.py </span>
-                  <span className="text-primary">--quick</span>
-                  <span className="text-muted-foreground/50">{"      # 2-min scan"}</span>
-                </div>
-                <div>
-                  <span className="text-emerald-400">python</span>
-                  <span className="text-foreground"> hp_laptop_diagnostics.py </span>
-                  <span className="text-primary">--report</span>
-                  <span className="text-muted-foreground/50">{"     # weekly report"}</span>
-                </div>
-                <div>
-                  <span className="text-emerald-400">python</span>
-                  <span className="text-foreground"> hp_laptop_diagnostics.py </span>
-                  <span className="text-primary">--monitor 60</span>
-                  <span className="text-muted-foreground/50">{" # live watch"}</span>
-                </div>
-                <div>
-                  <span className="text-emerald-400">python</span>
-                  <span className="text-foreground"> hp_laptop_diagnostics.py </span>
-                  <span className="text-primary">--export json</span>
-                  <span className="text-muted-foreground/50">{" # raw data"}</span>
-                </div>
-                <div className="mt-4 text-muted-foreground/40">{"# ─── Requirements ───────────────────────────────────"}</div>
-                <div className="mt-1">
-                  <span className="text-yellow-400">Python</span>
-                  <span className="text-foreground"> 3.9+ </span>
-                  <span className="text-muted-foreground/50">{"· Windows 10 / 11 · Admin recommended"}</span>
-                </div>
-                <div>
-                  <span className="text-yellow-400">pip install</span>
-                  <span className="text-foreground"> psutil wmi py-cpuinfo pynvml</span>
-                  <span className="text-muted-foreground/50">{" # auto-installed"}</span>
-                </div>
-                <div className="mt-4 text-muted-foreground/40">{"# ─── Output ─────────────────────────────────────────"}</div>
-                <div className="mt-1">
-                  <span className="text-emerald-400">{"✓"}</span>
-                  <span className="text-foreground"> Battery Health: </span>
-                  <span className="text-emerald-400">Excellent</span>
-                  <span className="text-muted-foreground/60"> (91.4% · 187 cycles)</span>
-                </div>
-                <div>
-                  <span className="text-yellow-400">{"⚠"}</span>
-                  <span className="text-foreground"> CPU Thermal Throttling </span>
-                  <span className="text-muted-foreground/60">detected 6 of last 7 days</span>
-                </div>
-                <div>
-                  <span className="text-emerald-400">{"✓"}</span>
-                  <span className="text-foreground"> NVMe SSD: </span>
-                  <span className="text-emerald-400">Good</span>
-                  <span className="text-muted-foreground/60"> (74% wear remaining · 43°C)</span>
-                </div>
-                <div>
-                  <span className="text-emerald-400">{"✓"}</span>
-                  <span className="text-foreground"> RAM: </span>
-                  <span className="text-foreground">16 GB </span>
-                  <span className="text-muted-foreground/60">· no memory errors · pressure normal</span>
-                </div>
-                <div className="mt-2">
-                  <span className="text-primary font-semibold">Overall Score: </span>
-                  <span className="text-emerald-400 font-bold">82</span>
-                  <span className="text-muted-foreground/60">/100  —  Your HP is in good shape.</span>
+                <div className="font-mono text-xs space-y-1 text-muted-foreground/60 bg-black/20 rounded-lg px-4 py-3">
+                  <div><span className="text-emerald-400">python</span> hp_laptop_diagnostics.py <span className="text-primary">--report</span></div>
+                  <div><span className="text-emerald-400">python</span> hp_laptop_diagnostics.py <span className="text-primary">--quick</span></div>
+                  <div><span className="text-emerald-400">python</span> hp_laptop_diagnostics.py <span className="text-primary">--monitor 60</span></div>
                 </div>
               </div>
+
+              {/* Expandable full code */}
+              <AnimatePresence>
+                {showHpCode && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                    className="overflow-hidden"
+                  >
+                    <div className="px-6 pb-6 font-mono text-xs leading-6 overflow-x-auto border-t border-white/10 pt-5">
+                      <div className="text-muted-foreground/50">{"# ══════════════════════════════════════════════════════"}</div>
+                      <div className="text-primary/80 font-semibold">{"# HP LAPTOP COMPREHENSIVE DIAGNOSTIC & PREDICTIVE HEALTH"}</div>
+                      <div className="text-muted-foreground/50">{"# ══════════════════════════════════════════════════════"}</div>
+                      <div className="mt-3 text-muted-foreground/60">{"# Covers: Battery · SSD/NVMe · CPU · RAM · GPU"}</div>
+                      <div className="text-muted-foreground/60">{"#         Thermals · Fans · Power · Drivers · Network"}</div>
+                      <div className="mt-3 text-muted-foreground/60">{"# Supports: Spectre · Envy · Pavilion · EliteBook"}</div>
+                      <div className="text-muted-foreground/60">{"#           ProBook · Omen · Victus · ZBook · Dragonfly"}</div>
+                      <div className="mt-4 text-muted-foreground/40">{"# ─── Requirements ────────────────────────────────────"}</div>
+                      <div className="mt-1"><span className="text-yellow-400">Python</span><span className="text-foreground"> 3.9+</span><span className="text-muted-foreground/50">{" · Windows 10/11 · Admin recommended"}</span></div>
+                      <div><span className="text-yellow-400">pip install</span><span className="text-foreground"> psutil wmi py-cpuinfo pynvml</span><span className="text-muted-foreground/50">{" # auto-installed"}</span></div>
+                      <div className="mt-4 text-muted-foreground/40">{"# ─── Usage ───────────────────────────────────────────"}</div>
+                      <div className="mt-1"><span className="text-emerald-400">python</span><span className="text-foreground"> hp_laptop_diagnostics.py</span><span className="text-muted-foreground/50">{"              # full scan"}</span></div>
+                      <div><span className="text-emerald-400">python</span><span className="text-foreground"> hp_laptop_diagnostics.py </span><span className="text-primary">--quick</span><span className="text-muted-foreground/50">{"          # 2-min scan"}</span></div>
+                      <div><span className="text-emerald-400">python</span><span className="text-foreground"> hp_laptop_diagnostics.py </span><span className="text-primary">--report</span><span className="text-muted-foreground/50">{"         # weekly report"}</span></div>
+                      <div><span className="text-emerald-400">python</span><span className="text-foreground"> hp_laptop_diagnostics.py </span><span className="text-primary">--monitor 60</span><span className="text-muted-foreground/50">{"     # live watch"}</span></div>
+                      <div><span className="text-emerald-400">python</span><span className="text-foreground"> hp_laptop_diagnostics.py </span><span className="text-primary">--export json</span><span className="text-muted-foreground/50">{"    # raw data"}</span></div>
+                      <div className="mt-4 text-muted-foreground/40">{"# ─── Sample output ───────────────────────────────────"}</div>
+                      <div className="mt-1"><span className="text-emerald-400">{"✓"}</span><span className="text-foreground"> Battery Health: </span><span className="text-emerald-400">Excellent</span><span className="text-muted-foreground/60">{" (91.4% · 187 cycles)"}</span></div>
+                      <div><span className="text-yellow-400">{"⚠"}</span><span className="text-foreground"> CPU Thermal Throttling </span><span className="text-muted-foreground/60">detected 6 of last 7 days</span></div>
+                      <div><span className="text-emerald-400">{"✓"}</span><span className="text-foreground"> NVMe SSD: </span><span className="text-emerald-400">Good</span><span className="text-muted-foreground/60">{" (74% wear · 43°C)"}</span></div>
+                      <div><span className="text-emerald-400">{"✓"}</span><span className="text-foreground"> RAM: 16 GB </span><span className="text-muted-foreground/60">· no errors · pressure normal</span></div>
+                      <div className="mt-2"><span className="text-primary font-semibold">Overall Score: </span><span className="text-emerald-400 font-bold">82</span><span className="text-muted-foreground/60">/100  —  Your HP is in good shape.</span></div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
 
             {/* Module breakdown */}
@@ -785,6 +763,212 @@ export default function Home() {
               { value: "2,732", label: "lines of code" },
               { value: "10", label: "hardware modules" },
               { value: "v2.0.0", label: "current version" },
+              { value: "free", label: "open source, always" },
+            ].map(({ value, label }) => (
+              <div key={label}>
+                <div className="text-2xl font-display font-bold text-primary">{value}</div>
+                <div className="text-xs text-muted-foreground mt-1">{label}</div>
+              </div>
+            ))}
+          </motion.div>
+
+        </div>
+      </section>
+
+      {/* Lenovo Diagnostic Script */}
+      <section className="py-32 px-6 md:px-12 relative overflow-hidden border-t border-white/5">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_100%_50%,rgba(0,229,255,0.04),transparent)]" />
+        <div className="max-w-7xl mx-auto relative z-10">
+
+          {/* Header */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="mb-16"
+          >
+            <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-panel text-xs font-medium text-primary mb-6">
+                  <SiLenovo className="w-3.5 h-3.5" />
+                  Lenovo-exclusive diagnostic script
+                </div>
+                <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">
+                  Deep Lenovo hardware scanner.<br />
+                  <span className="text-gradient">PowerShell. 18 sections. One run.</span>
+                </h2>
+                <p className="text-xl text-muted-foreground max-w-2xl">
+                  A PowerShell script built specifically for Lenovo laptops. Accesses Vantage APIs, ThinkPad sensors, Legion GameZone data, and Lenovo WMI classes unavailable to generic tools. Saves a full JSON report to your desktop.
+                </p>
+              </div>
+              <a href="/lenovo_laptop_diagnostics.ps1" download="lenovo_laptop_diagnostics.ps1" data-testid="link-download-lenovo-script">
+                <Button size="lg" className="rounded-full px-8 py-6 text-base font-semibold bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-3 shadow-[0_0_30px_-8px_rgba(0,229,255,0.5)] whitespace-nowrap">
+                  <Download className="w-5 h-5" />
+                  Download Script
+                </Button>
+              </a>
+            </div>
+          </motion.div>
+
+          <div className="grid lg:grid-cols-2 gap-10 items-start">
+
+            {/* Collapsible Lenovo code preview */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="glass-panel rounded-2xl overflow-hidden"
+            >
+              {/* Terminal chrome */}
+              <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/10 bg-black/30">
+                <div className="flex items-center gap-3">
+                  <div className="flex gap-1.5">
+                    <div className="w-3 h-3 rounded-full bg-red-500/70" />
+                    <div className="w-3 h-3 rounded-full bg-yellow-500/70" />
+                    <div className="w-3 h-3 rounded-full bg-emerald-500/70" />
+                  </div>
+                  <span className="text-xs text-muted-foreground font-mono">lenovo_laptop_diagnostics.ps1</span>
+                </div>
+                <button
+                  onClick={() => setShowLenovoCode(v => !v)}
+                  data-testid="button-toggle-lenovo-code"
+                  className="flex items-center gap-1.5 text-xs text-primary hover:text-primary/80 transition-colors font-medium cursor-pointer"
+                >
+                  <Terminal className="w-3.5 h-3.5" />
+                  {showLenovoCode ? "Hide code" : "View code"}
+                  <ChevronRight className={`w-3 h-3 transition-transform duration-200 ${showLenovoCode ? "rotate-90" : ""}`} />
+                </button>
+              </div>
+
+              {/* Collapsed summary */}
+              <div className="p-6">
+                <div className="grid grid-cols-2 gap-3 mb-4">
+                  {[
+                    { label: "Language", value: "PowerShell 5.1+" },
+                    { label: "Platform", value: "Windows 10/11" },
+                    { label: "Lines", value: "1,008" },
+                    { label: "Requires", value: "Run as Administrator" },
+                  ].map(({ label, value }) => (
+                    <div key={label} className="bg-white/[0.03] rounded-lg px-4 py-3 border border-white/5">
+                      <div className="text-xs text-muted-foreground mb-0.5">{label}</div>
+                      <div className="text-sm font-semibold font-mono text-foreground">{value}</div>
+                    </div>
+                  ))}
+                </div>
+                <div className="font-mono text-xs space-y-1 text-muted-foreground/60 bg-black/20 rounded-lg px-4 py-3">
+                  <div className="text-muted-foreground/50"># Right-click PowerShell → Run as Administrator</div>
+                  <div className="mt-1"><span className="text-yellow-400">.\lenovo_laptop_diagnostics.ps1</span></div>
+                  <div className="text-muted-foreground/50 mt-1"># Report + JSON saved to Desktop automatically</div>
+                </div>
+              </div>
+
+              {/* Expandable full code */}
+              <AnimatePresence>
+                {showLenovoCode && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                    className="overflow-hidden"
+                  >
+                    <div className="px-6 pb-6 font-mono text-xs leading-6 overflow-x-auto border-t border-white/10 pt-5">
+                      <div className="text-muted-foreground/50">{"# ============================================================"}</div>
+                      <div className="text-primary/80 font-semibold">{"# LENOVO LAPTOP COMPREHENSIVE DIAGNOSTIC SCRIPT"}</div>
+                      <div className="text-muted-foreground/50">{"# ============================================================"}</div>
+                      <div className="mt-3 text-muted-foreground/60">{"# Covers: ThinkPad · IdeaPad · Yoga · Legion · LOQ · ThinkBook"}</div>
+                      <div className="text-muted-foreground/60">{"# Models: 2019–2024  |  Windows 10/11"}</div>
+                      <div className="mt-4 text-muted-foreground/40">{"# ─── 18 sections ─────────────────────────────────────────"}</div>
+                      {[
+                        "1. System Identity & Lenovo Model Detection",
+                        "2. Battery Health (Vantage API + WMI)",
+                        "3. SSD / Storage + SMART Counters",
+                        "4. CPU Thermals & Throttling",
+                        "5. RAM / Memory Analysis",
+                        "6. GPU (Intel + NVIDIA/AMD)",
+                        "7. Thermal Zones & Fan RPM",
+                        "8. Power Delivery & Charger",
+                        "9. Network Stability & Wi-Fi",
+                        "10. Driver Health & Problem Devices",
+                        "11. Startup & Boot Performance",
+                        "12. Memory Pressure Analysis",
+                        "13. Windows Health & System Integrity",
+                        "14. Lenovo-Specific Features (GameZone, APS, Vantage)",
+                        "15. Cross-Metric Correlation Analysis",
+                        "16. Usage Habit Coaching",
+                        "17. Predictive Health Score (0–100)",
+                        "18. Save JSON + Text Report to Desktop",
+                      ].map((s, i) => (
+                        <div key={i} className={i === 0 ? "mt-1" : ""}>
+                          <span className="text-muted-foreground/40">{"#  "}</span>
+                          <span className="text-foreground/70">{s}</span>
+                        </div>
+                      ))}
+                      <div className="mt-4 text-muted-foreground/40">{"# ─── Sample output ───────────────────────────────────────"}</div>
+                      <div className="mt-1"><span className="text-emerald-400">{"[OK]  "}</span><span className="text-foreground">Battery Health    </span><span className="text-muted-foreground/60">: 88.3%  (312 cycles)</span></div>
+                      <div><span className="text-yellow-400">{"[WARN]"}</span><span className="text-foreground"> BIOS Age          </span><span className="text-muted-foreground/60">: 29 months — update available</span></div>
+                      <div><span className="text-emerald-400">{"[OK]  "}</span><span className="text-foreground">SSD SMART Wear    </span><span className="text-muted-foreground/60">: 12% used · 38°C</span></div>
+                      <div><span className="text-red-400">{"[CRIT]"}</span><span className="text-foreground"> WHEA Hardware Err </span><span className="text-muted-foreground/60">: 2 detected — check RAM</span></div>
+                      <div><span className="text-emerald-400">{"[OK]  "}</span><span className="text-foreground">Legion Fan 1      </span><span className="text-muted-foreground/60">: 2,840 RPM — normal</span></div>
+                      <div className="mt-2"><span className="text-primary font-semibold">HEALTH SCORE: </span><span className="text-emerald-400 font-bold">79</span><span className="text-muted-foreground/60">/100  —  GOOD</span></div>
+                      <div className="mt-1 text-muted-foreground/50">Report + JSON saved to Desktop.</div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+
+            {/* Lenovo module breakdown */}
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="grid grid-cols-2 gap-4"
+            >
+              {[
+                { icon: Battery,     label: "Battery",          desc: "WMI cycle count, Vantage charge thresholds, conservation mode, voltage" },
+                { icon: HardDrive,   label: "SSD / NVMe",       desc: "SMART wear, temperature, read/write errors, power-on hours" },
+                { icon: Cpu,         label: "CPU",              desc: "Thermals, throttle events, frequency scaling, turbo state" },
+                { icon: MemoryStick, label: "RAM",              desc: "Error rate, memory pressure, commit %, page file, leak patterns" },
+                { icon: Zap,         label: "GPU",              desc: "Intel + NVIDIA/AMD temps, VRAM, driver age, compute errors" },
+                { icon: Thermometer, label: "Thermals & Fans",  desc: "Legion GameZone fan RPM, thermal zones, throttle thresholds" },
+                { icon: Layers,      label: "Lenovo-Specific",  desc: "Vantage API, ThinkPad APS, GameZone, intelligent standby, hinge sensors" },
+                { icon: Network,     label: "Network",          desc: "Wi-Fi drop events, DNS latency, adapter errors, signal drift" },
+                { icon: Brain,       label: "Correlation AI",   desc: "8 cross-metric patterns: battery-heat, SSD pressure, crash+WHEA, and more" },
+                { icon: FileText,    label: "Health Score",     desc: "0–100 score with grade, deductions, and full JSON export to Desktop" },
+              ].map(({ icon: Icon, label, desc }) => (
+                <motion.div
+                  key={label}
+                  variants={fadeInUp}
+                  className="glass-panel rounded-xl p-5 group hover:border-primary/30 transition-colors duration-200"
+                >
+                  <div className="flex items-center gap-2.5 mb-2">
+                    <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                      <Icon className="w-3.5 h-3.5 text-primary" />
+                    </div>
+                    <span className="text-sm font-semibold">{label}</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{desc}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Lenovo stat bar */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-12 glass-panel rounded-2xl px-8 py-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center"
+          >
+            {[
+              { value: "1,008", label: "lines of code" },
+              { value: "18", label: "diagnostic sections" },
+              { value: "PowerShell", label: "no Python needed" },
               { value: "free", label: "open source, always" },
             ].map(({ value, label }) => (
               <div key={label}>
