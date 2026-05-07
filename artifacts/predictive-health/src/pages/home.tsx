@@ -7,6 +7,7 @@ import {
   Fan, Wifi, Info, Download, Brain, FileText,
   CheckCircle2, AlertTriangle, TrendingDown, ChevronRight
 } from "lucide-react";
+import { SiHp, SiLenovo, SiDell, SiAsus, SiAcer } from "react-icons/si";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -473,6 +474,115 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Brand Compatibility */}
+      <section className="py-32 px-6 md:px-12 max-w-7xl mx-auto">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+          className="text-center max-w-3xl mx-auto mb-20"
+        >
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-panel text-xs font-medium text-primary mb-6">
+            <CheckCircle2 className="w-3.5 h-3.5" />
+            Optimized for your brand
+          </div>
+          <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">
+            Built to know your laptop inside out.
+          </h2>
+          <p className="text-xl text-muted-foreground">
+            Different manufacturers expose different sensor data. PredictPC knows exactly where to look — and what patterns to watch for — on each brand.
+          </p>
+        </motion.div>
+
+        {/* HP & Lenovo featured cards */}
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          className="grid md:grid-cols-2 gap-8 mb-12"
+        >
+          {/* HP */}
+          <motion.div variants={fadeInUp} className="glass-panel rounded-3xl p-10 relative overflow-hidden group hover:border-primary/30 transition-colors duration-300">
+            <div className="absolute top-0 right-0 w-48 h-48 bg-primary/5 blur-[60px] rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="relative z-10">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+                  <SiHp className="w-7 h-7 text-foreground" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-display font-bold">HP Laptops</h3>
+                  <p className="text-sm text-primary">EliteBook, Spectre, Envy, Pavilion, Omen</p>
+                </div>
+              </div>
+              <p className="text-muted-foreground leading-relaxed mb-8">
+                HP's thermal management and battery firmware expose rich sensor data. PredictPC reads HP-specific SMART attributes and EC registers to catch issues unique to HP hardware — including the battery swelling pattern common in EliteBook G-series and fan bearing wear on Omen gaming units.
+              </p>
+              <div className="flex flex-col gap-3">
+                <BrandCheck text="HP Battery Manager API integration — tracks charge cycles at the cell level" />
+                <BrandCheck text="Omen thermal zone monitoring — detects GPU hot spots before throttling begins" />
+                <BrandCheck text="EliteBook SSD wear tracking — flags HP OEM NVMe units approaching end-of-life" />
+                <BrandCheck text="HP Sure Start firmware health monitoring" />
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Lenovo */}
+          <motion.div variants={fadeInUp} className="glass-panel rounded-3xl p-10 relative overflow-hidden group hover:border-primary/30 transition-colors duration-300">
+            <div className="absolute top-0 right-0 w-48 h-48 bg-primary/5 blur-[60px] rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="relative z-10">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+                  <SiLenovo className="w-7 h-7 text-foreground" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-display font-bold">Lenovo Laptops</h3>
+                  <p className="text-sm text-primary">ThinkPad, IdeaPad, Legion, Yoga, ThinkBook</p>
+                </div>
+              </div>
+              <p className="text-muted-foreground leading-relaxed mb-8">
+                Lenovo's Vantage SDK and ThinkPad Power Manager APIs give PredictPC unusually deep access to battery cell health, fan RPM curves, and thermal zone data. We cross-correlate these with usage habits to catch the notorious ThinkPad battery bulge and Legion cooling degradation well in advance.
+              </p>
+              <div className="flex flex-col gap-3">
+                <BrandCheck text="Lenovo Vantage battery health API — reads individual cell voltage deviation" />
+                <BrandCheck text="ThinkPad active protection sensor integration for physical shock tracking" />
+                <BrandCheck text="Legion fan curve anomaly detection — flags dust-caused RPM irregularities" />
+                <BrandCheck text="Yoga hinge stress monitoring via gyroscope delta patterns" />
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        {/* Other supported brands */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="glass-panel rounded-2xl px-8 py-7 flex flex-col sm:flex-row items-center gap-6 justify-between"
+        >
+          <p className="text-sm text-muted-foreground text-center sm:text-left">
+            Also fully supported via standard WMI &amp; ACPI interfaces:
+          </p>
+          <div className="flex items-center gap-8 flex-wrap justify-center">
+            {[
+              { Icon: SiDell, name: "Dell" },
+              { Icon: SiAsus, name: "Asus" },
+              { Icon: SiAcer, name: "Acer" },
+            ].map(({ Icon, name }) => (
+              <div key={name} className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors" data-testid={`brand-${name.toLowerCase()}`}>
+                <Icon className="w-5 h-5" />
+                <span className="text-sm font-medium">{name}</span>
+              </div>
+            ))}
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <span className="text-sm">+ more</span>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
       {/* CTA */}
       <section className="py-32 px-6 md:px-12 relative text-center">
         <motion.div
@@ -526,6 +636,15 @@ function MonitorItem({ icon, label }: { icon: ReactNode; label: string }) {
     <div className="flex items-center gap-3">
       <div className="text-primary/70">{icon}</div>
       <span className="font-medium text-lg">{label}</span>
+    </div>
+  );
+}
+
+function BrandCheck({ text }: { text: string }) {
+  return (
+    <div className="flex items-start gap-3">
+      <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+      <span className="text-sm text-muted-foreground leading-relaxed">{text}</span>
     </div>
   );
 }
