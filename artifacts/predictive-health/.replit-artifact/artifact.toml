@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "PredictPC Landing Page"
+version = "1.0.0"
+id = "artifacts/predictive-health"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24987
+
+[services.development]
+run = "pnpm --filter @workspace/predictive-health run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/predictive-health", "run", "build" ]
+publicDir = "artifacts/predictive-health/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24987"
+BASE_PATH = "/"

@@ -1,0 +1,20 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "QACCtydmJc9Dowy-oRHaM"
+uri = "file://artifacts/predictive-health/public/hero-core.png"
+type = "image"
+title = "Abstract intelligent core data pattern"
+
+[[generated]]
+id = "kmrwTvqh6Is-u_5Xkbxsq"
+uri = "file://artifacts/predictive-health/public/dashboard-mockup.png"
+type = "image"
+title = "Dark mode hardware dashboard UI"
+
+[[generated]]
+id = "QOKQF9nEVt6SeKoS3dtHc"
+uri = "file://artifacts/predictive-health/public/cross-correlation.png"
+type = "image"
+title = "Cross-correlation data nodes"
