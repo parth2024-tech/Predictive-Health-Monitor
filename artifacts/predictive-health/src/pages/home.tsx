@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import {
   Shield, Activity, Bell, Cpu, Battery, HardDrive,
   Fan, Wifi, Info, Download, Brain, FileText,
-  CheckCircle2, AlertTriangle, TrendingDown, ChevronRight
+  CheckCircle2, AlertTriangle, TrendingDown, ChevronRight,
+  Terminal, MemoryStick, Thermometer, Network, Layers, Zap
 } from "lucide-react";
 import { SiHp, SiLenovo, SiDell, SiAsus, SiAcer } from "react-icons/si";
 
@@ -581,6 +582,219 @@ export default function Home() {
             </div>
           </div>
         </motion.div>
+      </section>
+
+      {/* HP Diagnostic Script */}
+      <section className="py-32 px-6 md:px-12 relative bg-card/30 border-y border-white/5 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_0%_50%,rgba(0,229,255,0.05),transparent)]" />
+        <div className="max-w-7xl mx-auto relative z-10">
+
+          {/* Header */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="mb-16"
+          >
+            <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-panel text-xs font-medium text-primary mb-6">
+                  <SiHp className="w-3.5 h-3.5" />
+                  HP-exclusive diagnostic script
+                </div>
+                <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">
+                  Open-source HP health scanner.<br />
+                  <span className="text-gradient">Run it once. Know everything.</span>
+                </h2>
+                <p className="text-xl text-muted-foreground max-w-2xl">
+                  A standalone Python script purpose-built for HP laptops. Covers every hardware component, speaks plain English, and generates a full health report — no installation, no account needed.
+                </p>
+              </div>
+              <a href="/hp_laptop_diagnostics.py" download="hp_laptop_diagnostics.py" data-testid="link-download-hp-script">
+                <Button size="lg" className="rounded-full px-8 py-6 text-base font-semibold bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-3 shadow-[0_0_30px_-8px_rgba(0,229,255,0.5)] whitespace-nowrap">
+                  <Download className="w-5 h-5" />
+                  Download Script
+                </Button>
+              </a>
+            </div>
+          </motion.div>
+
+          <div className="grid lg:grid-cols-2 gap-10 items-start">
+
+            {/* Code preview */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="glass-panel rounded-2xl overflow-hidden"
+            >
+              {/* Terminal chrome */}
+              <div className="flex items-center gap-2 px-5 py-3.5 border-b border-white/10 bg-black/30">
+                <div className="flex gap-1.5">
+                  <div className="w-3 h-3 rounded-full bg-red-500/70" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-500/70" />
+                  <div className="w-3 h-3 rounded-full bg-emerald-500/70" />
+                </div>
+                <span className="text-xs text-muted-foreground font-mono ml-2">hp_laptop_diagnostics.py</span>
+              </div>
+
+              {/* Code body */}
+              <div className="p-6 font-mono text-xs leading-6 overflow-x-auto">
+                <div className="text-muted-foreground/50">
+                  {"# ══════════════════════════════════════════════════════"}
+                </div>
+                <div className="text-primary/80 font-semibold">
+                  {"# HP LAPTOP COMPREHENSIVE DIAGNOSTIC & PREDICTIVE HEALTH"}
+                </div>
+                <div className="text-muted-foreground/50">
+                  {"# ══════════════════════════════════════════════════════"}
+                </div>
+                <div className="mt-3 text-muted-foreground/60">
+                  {"# Covers: Battery · SSD/NVMe · CPU · RAM · GPU"}
+                </div>
+                <div className="text-muted-foreground/60">
+                  {"#         Thermals · Fans · Power · Drivers · Network"}
+                </div>
+                <div className="mt-3 text-muted-foreground/60">
+                  {"# Supports: Spectre · Envy · Pavilion · EliteBook"}
+                </div>
+                <div className="text-muted-foreground/60">
+                  {"#           ProBook · Omen · Victus · ZBook · Dragonfly"}
+                </div>
+                <div className="mt-4 text-muted-foreground/40">{"# ─── Usage ───────────────────────────────────────────"}</div>
+                <div className="mt-1">
+                  <span className="text-emerald-400">python</span>
+                  <span className="text-foreground"> hp_laptop_diagnostics.py</span>
+                  <span className="text-muted-foreground/50">{"          # full scan"}</span>
+                </div>
+                <div>
+                  <span className="text-emerald-400">python</span>
+                  <span className="text-foreground"> hp_laptop_diagnostics.py </span>
+                  <span className="text-primary">--quick</span>
+                  <span className="text-muted-foreground/50">{"      # 2-min scan"}</span>
+                </div>
+                <div>
+                  <span className="text-emerald-400">python</span>
+                  <span className="text-foreground"> hp_laptop_diagnostics.py </span>
+                  <span className="text-primary">--report</span>
+                  <span className="text-muted-foreground/50">{"     # weekly report"}</span>
+                </div>
+                <div>
+                  <span className="text-emerald-400">python</span>
+                  <span className="text-foreground"> hp_laptop_diagnostics.py </span>
+                  <span className="text-primary">--monitor 60</span>
+                  <span className="text-muted-foreground/50">{" # live watch"}</span>
+                </div>
+                <div>
+                  <span className="text-emerald-400">python</span>
+                  <span className="text-foreground"> hp_laptop_diagnostics.py </span>
+                  <span className="text-primary">--export json</span>
+                  <span className="text-muted-foreground/50">{" # raw data"}</span>
+                </div>
+                <div className="mt-4 text-muted-foreground/40">{"# ─── Requirements ───────────────────────────────────"}</div>
+                <div className="mt-1">
+                  <span className="text-yellow-400">Python</span>
+                  <span className="text-foreground"> 3.9+ </span>
+                  <span className="text-muted-foreground/50">{"· Windows 10 / 11 · Admin recommended"}</span>
+                </div>
+                <div>
+                  <span className="text-yellow-400">pip install</span>
+                  <span className="text-foreground"> psutil wmi py-cpuinfo pynvml</span>
+                  <span className="text-muted-foreground/50">{" # auto-installed"}</span>
+                </div>
+                <div className="mt-4 text-muted-foreground/40">{"# ─── Output ─────────────────────────────────────────"}</div>
+                <div className="mt-1">
+                  <span className="text-emerald-400">{"✓"}</span>
+                  <span className="text-foreground"> Battery Health: </span>
+                  <span className="text-emerald-400">Excellent</span>
+                  <span className="text-muted-foreground/60"> (91.4% · 187 cycles)</span>
+                </div>
+                <div>
+                  <span className="text-yellow-400">{"⚠"}</span>
+                  <span className="text-foreground"> CPU Thermal Throttling </span>
+                  <span className="text-muted-foreground/60">detected 6 of last 7 days</span>
+                </div>
+                <div>
+                  <span className="text-emerald-400">{"✓"}</span>
+                  <span className="text-foreground"> NVMe SSD: </span>
+                  <span className="text-emerald-400">Good</span>
+                  <span className="text-muted-foreground/60"> (74% wear remaining · 43°C)</span>
+                </div>
+                <div>
+                  <span className="text-emerald-400">{"✓"}</span>
+                  <span className="text-foreground"> RAM: </span>
+                  <span className="text-foreground">16 GB </span>
+                  <span className="text-muted-foreground/60">· no memory errors · pressure normal</span>
+                </div>
+                <div className="mt-2">
+                  <span className="text-primary font-semibold">Overall Score: </span>
+                  <span className="text-emerald-400 font-bold">82</span>
+                  <span className="text-muted-foreground/60">/100  —  Your HP is in good shape.</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Module breakdown */}
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="grid grid-cols-2 gap-4"
+            >
+              {[
+                { icon: Battery, label: "Battery", desc: "Wear level, cycles, temperature, charge habits, power delivery" },
+                { icon: HardDrive, label: "SSD / NVMe", desc: "SMART data, wear endurance, read errors, drive temperature" },
+                { icon: Cpu, label: "CPU", desc: "Thermals, throttling, turbo boost, microcode, core balance" },
+                { icon: MemoryStick, label: "RAM", desc: "Memory pressure, error rate, usage patterns, leak detection" },
+                { icon: Zap, label: "GPU", desc: "Temperature, VRAM usage, driver version, compute errors" },
+                { icon: Thermometer, label: "Thermals & Fans", desc: "All thermal zones, fan RPM curves, vent blockage patterns" },
+                { icon: Layers, label: "Startup & Drivers", desc: "Boot time trend, failing drivers, Windows event log errors" },
+                { icon: Network, label: "Network Stability", desc: "Packet loss, DNS latency, adapter errors, Wi-Fi signal drift" },
+                { icon: Brain, label: "Habit Coaching", desc: "Detects usage patterns silently damaging your hardware" },
+                { icon: FileText, label: "Health Report", desc: "Plain English weekly summary with predictions and timelines" },
+              ].map(({ icon: Icon, label, desc }) => (
+                <motion.div
+                  key={label}
+                  variants={fadeInUp}
+                  className="glass-panel rounded-xl p-5 group hover:border-primary/30 transition-colors duration-200"
+                >
+                  <div className="flex items-center gap-2.5 mb-2">
+                    <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                      <Icon className="w-3.5 h-3.5 text-primary" />
+                    </div>
+                    <span className="text-sm font-semibold">{label}</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{desc}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Bottom stat bar */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-12 glass-panel rounded-2xl px-8 py-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center"
+          >
+            {[
+              { value: "2,732", label: "lines of code" },
+              { value: "10", label: "hardware modules" },
+              { value: "v2.0.0", label: "current version" },
+              { value: "free", label: "open source, always" },
+            ].map(({ value, label }) => (
+              <div key={label}>
+                <div className="text-2xl font-display font-bold text-primary">{value}</div>
+                <div className="text-xs text-muted-foreground mt-1">{label}</div>
+              </div>
+            ))}
+          </motion.div>
+
+        </div>
       </section>
 
       {/* CTA */}
